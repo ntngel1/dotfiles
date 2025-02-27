@@ -3,17 +3,25 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     mac-app-util.url = "github:hraban/mac-app-util";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-outputs = inputs@{ self, nix-darwin, nix-homebrew, nixpkgs, mac-app-util }:
-let configuration = {pkgs, ... }: {
+outputs = inputs@{ self, home-manager, nix-darwin, nix-homebrew, mac-app-util, nixpkgs }:
+let 
+  configuration = {pkgs, ... }: {
+      users.users.ntngel1 = {
+          home = "/Users/ntngel1";
+      };
 
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
            pkgs.neovim
@@ -74,14 +82,30 @@ let configuration = {pkgs, ... }: {
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
       nixpkgs.config.allowUnfree = true;
-};  in {
+};
+    homeconfig = {pkgs, ... }: {
+        home.stateVersion = "25.05";
+	programs.home-manager.enable = true;
+
+	home.packages = with pkgs; [];
+	home.sessionVariables = {
+            EDITOR = "nvim";
+	};
+    };
+in {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#Kirills-MacBook-Pro
+    # $ darwin-rebuild build --flake .#macbook
     darwinConfigurations.macbook = nix-darwin.lib.darwinSystem {
       modules = [ 
         configuration
         mac-app-util.darwinModules.default
         nix-homebrew.darwinModules.nix-homebrew
+	home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+	    home-manager.useUserPackages = true;
+	    home-manager.verbose = true;
+	    home-manager.users.ntngel1 = homeconfig;
+	}
         {
           nix-homebrew = {
             enable = true;
