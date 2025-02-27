@@ -59,6 +59,7 @@ let
       # $ darwin-rebuild changelog
       system.stateVersion = 6;
 
+      power.sleep.display = 5;
       system.defaults = {
         dock.persistent-apps = [
           "/System/Applications/Mail.app"
@@ -74,10 +75,18 @@ let
         finder.FXEnableExtensionChangeWarning = false;
         finder.FXPreferredViewStyle = "Nlsv";
         finder.ShowPathbar = true;
+        controlcenter.BatteryShowPercentage = true;
         NSGlobalDomain = {
+          AppleInterfaceStyle = "Dark";
           KeyRepeat = 2;
           InitialKeyRepeat = 15;
+          "com.apple.keyboard.fnState" = true;
         };
+        CustomSystemPreferences = {
+          "com.apple.Safari" = {
+            "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+          };
+	};
       };
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
@@ -88,8 +97,19 @@ let
 	programs.home-manager.enable = true;
 
 	home.packages = with pkgs; [];
+	home.file = {
+            ".config/sbt/sbtopts".text = "-J-Xmx4096M -J-Xss2M";
+	};
 	home.sessionVariables = {
             EDITOR = "nvim";
+	};
+
+        programs.sbt.enable = true;
+	programs.zsh = {
+            enable = true;
+	    shellAliases = {
+               ls = "ls -la";
+	    };
 	};
     };
 in {
