@@ -24,7 +24,7 @@ let
 
       environment.systemPackages =
         [
-           pkgs.neovim
+           pkgs.emacs
            pkgs.alacritty
            pkgs.telegram-desktop
            pkgs.discord
@@ -35,6 +35,10 @@ let
 
       homebrew = {
         enable = true;
+	casks = [
+            "logi-options+"
+	    "openvpn-connect"
+	];
         masApps = {
           Shadowrocket = 932747118;
         };
@@ -105,11 +109,23 @@ let
 	};
 
         programs.sbt.enable = true;
+
 	programs.zsh = {
             enable = true;
 	    shellAliases = {
                ls = "ls -la";
 	    };
+	};
+	
+	programs.emacs = {
+            enable = true;
+	    extraConfig = ''
+	        (setq standard-indent 2)
+	    '';
+	};
+
+	services.emacs = {
+            enable = true;
 	};
     };
 in {
