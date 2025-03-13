@@ -31,6 +31,8 @@ let
            pkgs.jetbrains.idea-community
            pkgs.mkalias
            pkgs.sbt
+           pkgs.nodejs
+           pkgs.redis
         ];
 
       homebrew = {
@@ -105,7 +107,7 @@ let
             ".config/sbt/sbtopts".text = "-J-Xmx4096M -J-Xss2M";
 	};
 	home.sessionVariables = {
-            EDITOR = "nvim";
+            EDITOR = "vim";
 	};
 
         programs.sbt.enable = true;
