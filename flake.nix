@@ -22,10 +22,13 @@ let
           home = "/Users/ntngel1";
       };
 
+      home-manager.backupFileExtension = "backup";
+
       environment.systemPackages =
         [
-           pkgs.emacs
-           pkgs.alacritty
+           pkgs.vim
+           pkgs.kitty
+           pkgs.jetbrains-mono
            pkgs.telegram-desktop
            pkgs.discord
            pkgs.jetbrains.idea-community
@@ -33,6 +36,8 @@ let
            pkgs.sbt
            pkgs.nodejs
            pkgs.redis
+           pkgs.mongosh
+           pkgs.spotify
         ];
 
       homebrew = {
@@ -43,13 +48,13 @@ let
 	];
         masApps = {
           Shadowrocket = 932747118;
+          Keynote = 409183694;
         };
         
         onActivation.cleanup = "uninstall";
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
       };
-
 
       nix.enable = false;
       # Necessary for using flakes on this system.
@@ -69,8 +74,11 @@ let
       system.defaults = {
         dock.persistent-apps = [
           "/System/Applications/Mail.app"
-          "${pkgs.alacritty}/Applications/Alacritty.app"
+          "/Applications/Safari.app"
+          "/Applications/Shadowrocket.app"
+          "/Applications/OpenVPN Connect.app"
           "${pkgs.discord}/Applications/Discord.app"
+          "${pkgs.kitty}/Applications/kitty.app"
           "${pkgs.jetbrains.idea-community}/Applications/IntelliJ IDEA CE.app"
         ];
         dock.show-recents = false;
@@ -94,6 +102,9 @@ let
           };
 	};
       };
+
+      services.redis.enable = true;
+
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
       nixpkgs.config.allowUnfree = true;
@@ -118,17 +129,13 @@ let
                ls = "ls -la";
 	    };
 	};
-	
-	programs.emacs = {
-            enable = true;
-	    extraConfig = ''
-	        (setq standard-indent 2)
-	    '';
-	};
 
-	services.emacs = {
+        programs.kitty = {
             enable = true;
-	};
+            font.package = pkgs.jetbrains-mono;
+            font.name = "JetBrains Mono";
+            font.size = 18;
+        };
     };
 in {
     # Build darwin flake using:
