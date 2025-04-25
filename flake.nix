@@ -49,6 +49,7 @@ let
         masApps = {
           Shadowrocket = 932747118;
           Keynote = 409183694;
+          Numbers = 409203825;
         };
         
         onActivation.cleanup = "uninstall";
@@ -65,6 +66,7 @@ let
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
+      security.pam.services.sudo_local.watchIdAuth = true;
 
       # Used for backwards compatibility, please read the changelog before changing.
       # $ darwin-rebuild changelog
