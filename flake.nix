@@ -30,14 +30,16 @@ let
            pkgs.kitty
            pkgs.jetbrains-mono
            pkgs.telegram-desktop
-           pkgs.discord
+           pkgs.discord-canary
            pkgs.jetbrains.idea-community
+           pkgs.jetbrains.clion
            pkgs.mkalias
            pkgs.sbt
            pkgs.nodejs
            pkgs.redis
            pkgs.mongosh
            pkgs.spotify
+           pkgs.hoppscotch
         ];
 
       homebrew = {
@@ -79,7 +81,7 @@ let
           "/Applications/Safari.app"
           "/Applications/Shadowrocket.app"
           "/Applications/OpenVPN Connect.app"
-          "${pkgs.discord}/Applications/Discord.app"
+          "${pkgs.discord-canary}/Applications/Discord Canary.app"
           "${pkgs.kitty}/Applications/kitty.app"
           "${pkgs.jetbrains.idea-community}/Applications/IntelliJ IDEA CE.app"
         ];
