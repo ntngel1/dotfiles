@@ -27,12 +27,10 @@ let
       environment.systemPackages =
         [
            pkgs.vim
-           pkgs.kitty
            pkgs.jetbrains-mono
            pkgs.telegram-desktop
            pkgs.discord-canary
            pkgs.jetbrains.idea-community
-           pkgs.jetbrains.clion
            pkgs.mkalias
            pkgs.sbt
            pkgs.nodejs
@@ -132,6 +130,7 @@ let
 	    shellAliases = {
                ls = "ls -la";
 	    };
+            initContent = "export PLAYDATE_SDK_PATH=/Users/ntngel1/Developer/PlaydateSDK";
 	};
 
         programs.kitty = {
