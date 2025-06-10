@@ -44,7 +44,7 @@ let
         enable = true;
 	casks = [
             "logi-options+"
-	    "openvpn-connect"
+	    #"openvpn-connect" TODO: Maybe remove?
 	];
         masApps = {
           Shadowrocket = 932747118;
@@ -76,12 +76,15 @@ let
       system.defaults = {
         dock.persistent-apps = [
           "/System/Applications/Mail.app"
-          "/Applications/Safari.app"
-          "/Applications/Shadowrocket.app"
-          "/Applications/OpenVPN Connect.app"
+          "${pkgs.telegram-desktop}/Applications/Telegram.app"
           "${pkgs.discord-canary}/Applications/Discord Canary.app"
-          "${pkgs.kitty}/Applications/kitty.app"
+          "/Applications/Safari.app"
+          "/System/Applications/Notes.app"
+          "${pkgs.spotify}/Applications/Spotify.app"
+          "/Applications/Shadowrocket.app"
+          "${pkgs.hoppscotch}/Applications/Hoppscotch.app"
           "${pkgs.jetbrains.idea-community}/Applications/IntelliJ IDEA CE.app"
+          "/System/Applications/Utilities/Terminal.app"
         ];
         dock.show-recents = false;
         dock.wvous-br-corner = 1;
@@ -110,6 +113,7 @@ let
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.config.allowUnsupportedSystem = true;
 };
     homeconfig = {pkgs, ... }: {
         home.stateVersion = "25.05";
@@ -130,7 +134,6 @@ let
 	    shellAliases = {
                ls = "ls -la";
 	    };
-            initContent = "export PLAYDATE_SDK_PATH=/Users/ntngel1/Developer/PlaydateSDK";
 	};
 
         programs.kitty = {
