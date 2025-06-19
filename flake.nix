@@ -115,13 +115,14 @@ let
       nixpkgs.config.allowUnfree = true;
       nixpkgs.config.allowUnsupportedSystem = true;
 };
-    homeconfig = {pkgs, ... }: {
+    homeconfig = {pkgs, config, ... }: {
         home.stateVersion = "25.05";
 	programs.home-manager.enable = true;
 
 	home.packages = with pkgs; [];
 	home.file = {
             ".config/sbt/sbtopts".text = "-J-Xmx4096M -J-Xss2M";
+            ".ideavimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/.ideavimrc";
 	};
 	home.sessionVariables = {
             EDITOR = "vim";
