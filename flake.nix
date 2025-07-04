@@ -38,6 +38,9 @@ let
            pkgs.mongosh
            pkgs.spotify
            pkgs.hoppscotch
+           pkgs.docker
+           pkgs.docker-client
+           pkgs.colima
         ];
 
       homebrew = {
@@ -74,6 +77,7 @@ let
 
       power.sleep.display = 5;
       system.defaults = {
+        WindowManager.EnableTiledWindowMargins = false;
         dock.persistent-apps = [
           "/System/Applications/Mail.app"
           "${pkgs.telegram-desktop}/Applications/Telegram.app"
@@ -105,9 +109,31 @@ let
           "com.apple.Safari" = {
             "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
           };
+          "com.apple.symbolichotkeys" = {
+            AppleSymbolicHotKeys = {
+              # screenshoting and saving to desktop
+              "28" = { enabled = false; };
+              "30" = { enabled = false; };
+              # screenshoting and saving to clipboard
+              "29" = {
+                enabled = true;
+                value = {
+                  parameters = [51 20 1179648];
+                  type = "standard";
+                };
+              };
+              "31" = {
+                enabled = true;
+                value = {
+                  parameters = [52 21 1179648];
+                  type = "standard";
+                };
+              };
+            };
+          };
 	};
       };
-
+      
       services.redis.enable = true;
 
       # The platform the configuration will be used on.
@@ -123,6 +149,8 @@ let
 	home.file = {
             ".config/sbt/sbtopts".text = "-J-Xmx4096M -J-Xss2M";
             ".ideavimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/.ideavimrc";
+
+            ".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/.vimrc";
 	};
 	home.sessionVariables = {
             EDITOR = "vim";
