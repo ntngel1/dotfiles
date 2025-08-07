@@ -18,14 +18,11 @@
 outputs = inputs@{ self, home-manager, nix-darwin, nix-homebrew, mac-app-util, nixpkgs }:
 let 
   configuration = {pkgs, ... }: {
-      users.users.ntngel1 = {
-          home = "/Users/ntngel1";
-      };
-
       home-manager.backupFileExtension = "backup";
 
       environment.systemPackages =
         [
+           pkgs.gemini-cli
            pkgs.vim
            pkgs.jetbrains-mono
            pkgs.telegram-desktop
@@ -47,10 +44,9 @@ let
         enable = true;
 	casks = [
             "logi-options+"
-	    #"openvpn-connect" TODO: Maybe remove?
 	];
         masApps = {
-          Shadowrocket = 932747118;
+          # Shadowrocket = 932747118;
           Keynote = 409183694;
           Numbers = 409203825;
         };
@@ -64,9 +60,6 @@ let
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
 
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
-
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
       security.pam.services.sudo_local.watchIdAuth = true;
@@ -76,6 +69,7 @@ let
       system.stateVersion = 6;
 
       power.sleep.display = 5;
+      system.primaryUser = "ntngel1";
       system.defaults = {
         WindowManager.EnableTiledWindowMargins = false;
         dock.persistent-apps = [
@@ -136,6 +130,10 @@ let
       
       services.redis.enable = true;
 
+      users.users.ntngel1 = {
+          home = "/Users/ntngel1";
+      };
+
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
       nixpkgs.config.allowUnfree = true;
@@ -154,6 +152,7 @@ let
 	};
 	home.sessionVariables = {
             EDITOR = "vim";
+            GOOGLE_CLOUD_PROJECT = "midyear-node-467706-e4";
 	};
 
         programs.sbt.enable = true;
@@ -162,15 +161,9 @@ let
             enable = true;
 	    shellAliases = {
                ls = "ls -la";
+               mongostage = "mongosh mongodb://10.40.0.35:27017/kinokassa";
 	    };
 	};
-
-        programs.kitty = {
-            enable = true;
-            font.package = pkgs.jetbrains-mono;
-            font.name = "JetBrains Mono";
-            font.size = 18;
-        };
     };
 in {
     # Build darwin flake using:
