@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo darwin-rebuild switch --flake .#macbook
+sudo darwin-rebuild switch --flake .#default
