@@ -22,16 +22,14 @@
   let
     system = "aarch64-darwin";
 
-    configuration = { pkgs, ... }: {
+    configuration = { pkgs, config, ... }: {
       home-manager.backupFileExtension = "backup";
 
       environment.systemPackages = with pkgs; [
-        gemini-cli
         vim
         jetbrains-mono
         telegram-desktop
-        discord-canary
-        jetbrains.idea-community
+        jetbrains.idea-ultimate
         mkalias
         sbt
         nodejs
@@ -39,9 +37,6 @@
         mongosh
         spotify
         hoppscotch
-        docker
-        docker-client
-        colima
       ];
 
       homebrew = {
@@ -50,7 +45,6 @@
         masApps = {
           Keynote = 409183694;
           Numbers = 409203825;
-          # Shadowrocket = 932747118;
         };
         onActivation = {
           cleanup = "uninstall";
@@ -80,13 +74,12 @@
           persistent-apps = [
             "/System/Applications/Mail.app"
             "${pkgs.telegram-desktop}/Applications/Telegram.app"
-            "${pkgs.discord-canary}/Applications/Discord Canary.app"
             "/Applications/Safari.app"
             "/System/Applications/Notes.app"
             "${pkgs.spotify}/Applications/Spotify.app"
             "/Applications/Shadowrocket.app"
             "${pkgs.hoppscotch}/Applications/Hoppscotch.app"
-            "${pkgs.jetbrains.idea-community}/Applications/IntelliJ IDEA CE.app"
+            "${pkgs.jetbrains.idea-ultimate}/Applications/IntelliJ IDEA.app"
             "/System/Applications/Utilities/Terminal.app"
           ];
           show-recents = false;
@@ -153,7 +146,6 @@
 
       home.sessionVariables = {
         EDITOR = "vim";
-        GOOGLE_CLOUD_PROJECT = "midyear-node-467706-e4";
       };
 
       programs.sbt.enable = true;
