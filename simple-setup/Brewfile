@@ -1,0 +1,35 @@
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+tap "cachix/tap"
+# mongosh is in core; if needed: tap "mongodb/brew"
+
+# CLI tools
+brew "vim"
+brew "git"
+brew "sbt"
+brew "node"
+brew "redis"
+brew "mongosh"
+brew "mas"
+brew "dockutil"
+brew "cachix/tap/devenv"
+
+# GUI apps and fonts
+cask "intellij-idea"
+cask "telegram"
+cask "spotify"
+cask "audacity"
+cask "hoppscotch"
+cask "logi-options-plus"
+cask "font-jetbrains-mono"
+
+# Mac App Store apps
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+
+# Notes:
+# - If you prefer another Telegram cask name, adjust above.
+# - If mongosh requires mongodb tap on your machine, uncomment mongodb/brew tap.
+# - devenv comes from cachix/tap; if you don’t need it, remove.
